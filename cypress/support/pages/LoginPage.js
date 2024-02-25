@@ -21,6 +21,7 @@ class LoginPage extends BasePage {
 
     getErrorMessageText() {
         return cy.get('.heading1 .subtext');
+
     }
 
     fillLoginFields(username = '', password = '') {

@@ -18,24 +18,34 @@
 
 import user from '../fixtures/user.json'
 import {findProduct} from '../support/helper'
-import loginPage from "../support/pages/LoginPage";
+
+import LoginPage from "../support/pages/LoginPage";
+import OrderPage from "../support/pages/OrderPage";
+
 
 describe('Order suite', () => {
     it('Order from homepage', () => {
-        loginPage.visit();
-        loginPage.fillLoginFields(user.loginname, user.password);
+        LoginPage.visit();
+        LoginPage.fillLoginFields(user.loginname, user.password);
 
-        cy.get('#filter_keyword')
-            .type('i')
-            .closest("form")
-            .submit();
+        OrderPage.getSearchInput().type('i').closest("form").submit();
+        // cy.get('#filter_keyword')
+
+
 
         findProduct('Benefit Bella Bamba');
 
-        cy.get('.productpagecart').click()
-        cy.get('#cart_checkout1').click()
-        cy.get('#checkout_btn').click()
-        cy.get('.contentpanel').should('contain', "Thank you for shopping with us!")
+        // cy.get('.productpagecart').click()
+        OrderPage.getAddToCartButton().click();
+
+        // cy.get('#cart_checkout1').click()
+        OrderPage.getCheckoutButton().click();
+
+
+        // cy.get('#checkout_btn').click()
+        OrderPage.getConfirmOrderButton().click();
+
+        OrderPage.getContentPanel().should('contain', "Thank you for shopping with us!")
     })
 })
 
